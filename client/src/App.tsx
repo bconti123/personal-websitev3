@@ -1,14 +1,13 @@
-import { useState } from 'react'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div className='text-4x1 text-blue-500'>Hello World</div>
-    </>
-  )
+    <Routes>
+      <Route element={<div>Root Hello!</div>}>
+        <Route path="/test" element={<div>Hello Worl!!!!</div>} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;

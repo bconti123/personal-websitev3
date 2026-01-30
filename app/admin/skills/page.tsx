@@ -26,10 +26,29 @@ export default async function AdminSkillsPage() {
 
       <div style={{ display: "grid", gap: 18, marginTop: 16 }}>
         {categories.map((category) => (
-          <div key={category} style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h2 style={{ margin: 0 }}>{category}</h2>
-              <small style={{ opacity: 0.7 }}>{grouped[category].length} item(s)</small>
+            <div key={category} style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
+                <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: 12,
+                }}
+                >
+                <h2 style={{ margin: 0 }}>{category}</h2>
+
+                <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                    <small style={{ opacity: 0.7 }}>
+                    {grouped[category].length} item(s)
+                    </small>
+
+                    <Link
+                    href={`/admin/skills/new?category=${encodeURIComponent(category)}`}
+                    style={{ fontSize: 14 }}
+                    >
+                    + New Skill
+                    </Link>
+                </div>
             </div>
 
             <ul style={{ display: "grid", gap: 10, padding: 0, listStyle: "none", marginTop: 12 }}>

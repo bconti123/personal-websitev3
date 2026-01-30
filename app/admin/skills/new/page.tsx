@@ -3,7 +3,17 @@ import { createSkill } from "../actions";
 
 const CATEGORIES = ["Languages", "Frontend", "Backend", "Databases", "Cloud/DevOps", "Tools"] as const;
 
-export default function NewSkillPage() {
+export default async function NewSkillPage({
+  searchParams,
+}: {
+  searchParams?: { category?: string } | Promise<{ category?: string }>;
+}) {
+  const searchParamsResolved = await Promise.resolve(searchParams);
+  const defaultCategory =
+    searchParamsResolved?.category && (CATEGORIES as readonly string[]).includes(searchParamsResolved.category)
+      ? searchParamsResolved.category
+      : CATEGORIES[0];
+
   return (
     <section>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -19,7 +29,7 @@ export default function NewSkillPage() {
 
         <label>
           Category
-          <select name="category" defaultValue={CATEGORIES[0]} required>
+          <select name="category" defaultValue={defaultCategory} required>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
                 {c}

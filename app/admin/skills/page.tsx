@@ -7,11 +7,13 @@ export default async function AdminSkillsPage() {
     orderBy: [{ category: "asc" }, { sortOrder: "asc" }, { name: "asc" }],
   });
 
-  // group by category
-  const grouped = skills.reduce<Record<string, typeof skills>>((acc, s) => {
-    (acc[s.category] ??= []).push(s);
+  // Group by category
+  const grouped = skills.reduce<Record<string, typeof skills>>((acc, skill) => {
+    (acc[skill.category] ??= []).push(skill);
     return acc;
   }, {});
+
+  const categories = Object.keys(grouped);
 
   return (
     <section>
@@ -22,41 +24,39 @@ export default async function AdminSkillsPage() {
 
       {skills.length === 0 ? <p>No skills yet.</p> : null}
 
-      <div style={{ display: "grid", gap: 16 }}>
-        {Object.entries(grouped).map(([category, items]) => (
-          <div key={category} style={{ border: "1px solid #ddd", borderRadius: 10, padding: 12 }}>
-            <h2 style={{ marginTop: 0 }}>{category}</h2>
+      <div style={{ display: "grid", gap: 18, marginTop: 16 }}>
+        {categories.map((category) => (
+          <div key={category} style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <h2 style={{ margin: 0 }}>{category}</h2>
+              <small style={{ opacity: 0.7 }}>{grouped[category].length} item(s)</small>
+            </div>
 
-            <ul style={{ display: "grid", gap: 10, padding: 0, listStyle: "none" }}>
-              {items.map((s) => (
-                <li
-                  key={s.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: 12,
-                    borderTop: "1px solid #eee",
-                    paddingTop: 10,
-                  }}
-                >
-                  <div>
-                    <strong>{s.name}</strong>
-                    <div style={{ opacity: 0.8 }}>sortOrder: {s.sortOrder}</div>
-                  </div>
+            <ul style={{ display: "grid", gap: 10, padding: 0, listStyle: "none", marginTop: 12 }}>
+              {grouped[category].map((s) => (
+                <li key={s.id} style={{ border: "1px solid #eee", borderRadius: 10, padding: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                    <div>
+                      <strong>{s.name}</strong>
+                      <div style={{ opacity: 0.7, marginTop: 6 }}>
+                        <small>sortOrder: {s.sortOrder}</small>
+                      </div>
+                    </div>
 
-                  <div style={{ display: "flex", gap: 10 }}>
-                    <Link href={`/admin/skills/${s.id}/edit`}>Edit</Link>
+                    <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                      <Link href={`/admin/skills/${s.id}/edit`}>Edit</Link>
 
-                    <form
-                      action={async () => {
-                        "use server";
-                        await deleteSkill(s.id);
-                      }}
-                    >
-                      <button type="submit" style={{ cursor: "pointer" }}>
-                        Delete
-                      </button>
-                    </form>
+                      <form
+                        action={async () => {
+                          "use server";
+                          await deleteSkill(s.id);
+                        }}
+                      >
+                        <button type="submit" style={{ cursor: "pointer" }}>
+                          Delete
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 </li>
               ))}

@@ -14,6 +14,7 @@ export default async function AdminPage() {
         <li><Link href="/admin/projects">Manage Projects</Link></li>
         <li><Link href="/admin/skills">Manage Skills</Link></li>
         <li><Link href="/admin/content">Site Content</Link></li>
+        <li><Link href="/admin/social-links">Social Links</Link></li>
       </ul>
     </main>
   );

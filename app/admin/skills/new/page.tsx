@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { createSkill } from "../actions";
+import NewSkillForm from "./NewSkillForm";
 
 const CATEGORIES = ["Languages", "Frontend", "Backend", "Databases", "Cloud/DevOps", "Tools"] as const;
 
@@ -8,11 +8,10 @@ export default async function NewSkillPage({
 }: {
   searchParams?: { category?: string } | Promise<{ category?: string }>;
 }) {
-  const searchParamsResolved = await Promise.resolve(searchParams);
+  const sp = await Promise.resolve(searchParams);
+
   const defaultCategory =
-    searchParamsResolved?.category && (CATEGORIES as readonly string[]).includes(searchParamsResolved.category)
-      ? searchParamsResolved.category
-      : CATEGORIES[0];
+    sp?.category && (CATEGORIES as readonly string[]).includes(sp.category) ? sp.category : CATEGORIES[0];
 
   return (
     <section>
@@ -21,32 +20,7 @@ export default async function NewSkillPage({
         <Link href="/admin/skills">Back</Link>
       </div>
 
-      <form action={createSkill} style={{ display: "grid", gap: 12, maxWidth: 600 }}>
-        <label>
-          Name
-          <input name="name" placeholder="TypeScript" required />
-        </label>
-
-        <label>
-          Category
-          <select name="category" defaultValue={defaultCategory} required>
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label>
-          Sort order
-          <input type="number" name="sortOrder" defaultValue={0} />
-        </label>
-
-        <button type="submit" style={{ cursor: "pointer" }}>
-          Create Skill
-        </button>
-      </form>
+      <NewSkillForm defaultCategory={defaultCategory} />
     </section>
   );
 }

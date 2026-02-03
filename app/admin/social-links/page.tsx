@@ -39,6 +39,10 @@ export default async function SocialLinksPage() {
               </div>
 
               <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <a href={s.url} target="_blank" rel="noreferrer">
+                  Preview
+                </a>
+
                 <Link href={`/admin/social-links/${s.id}/edit`}>Edit</Link>
 
                 <form

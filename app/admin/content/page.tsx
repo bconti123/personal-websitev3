@@ -28,6 +28,7 @@ export default async function AdminContentPage() {
           label="Headshot"
           currentUrl={site?.headshotUrl}
           objectKey="headshot/headshot"
+          aspectClass="aspect-square"
           hint="This image will be used on the homepage hero."
         />
 

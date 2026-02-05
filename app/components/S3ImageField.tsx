@@ -11,6 +11,7 @@ type S3ImageFieldProps = {
   accept?: string;
   objectKey?: string;
   getObjectKey?: (file: File) => string;
+  aspectClass?: string;
 };
 
 function S3ImageField({
@@ -21,6 +22,7 @@ function S3ImageField({
   accept = "image/*",
   objectKey,
   getObjectKey,
+  aspectClass = "aspect-video",
 }: S3ImageFieldProps) {
   const [value, setValue] = React.useState(currentUrl ?? "");
 
@@ -56,8 +58,8 @@ function S3ImageField({
       </div>
 
       {value ? (
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-          <img src={value} alt="Upload preview" className="h-48 w-full object-cover" />
+        <div className={`overflow-hidden rounded-xl border border-slate-200 bg-white ${aspectClass}`}>
+          <img src={value} alt="Upload preview" className="h-full w-full object-cover" />
         </div>
       ) : null}
 

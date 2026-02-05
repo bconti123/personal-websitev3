@@ -182,6 +182,15 @@ export default async function Home() {
             <Grid cols={2} gap="lg">
               {projects.map((project) => (
                 <Card key={project.id} className="bg-white/85">
+                  {project.imageUrl ? (
+                    <div className="overflow-hidden rounded-t-xl aspect-video">
+                      <img
+                        src={project.imageUrl}
+                        alt={`${project.title} cover`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ) : null}
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle>{project.title}</CardTitle>

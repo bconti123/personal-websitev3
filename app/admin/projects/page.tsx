@@ -30,11 +30,22 @@ export default async function AdminProjectsPage() {
             <Card className="bg-white/80">
               <CardHeader>
                 <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <CardTitle>
-                      {p.title} {p.featured ? <span className="text-amber-600">★</span> : null}
-                    </CardTitle>
-                    <p className="mt-1 text-sm text-slate-500">{p.slug}</p>
+                  <div className="flex items-start gap-4">
+                    {p.imageUrl ? (
+                      <div className="w-20 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 aspect-[4/3]">
+                        <img
+                          src={p.imageUrl}
+                          alt={`${p.title} cover`}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ) : null}
+                    <div>
+                      <CardTitle>
+                        {p.title} {p.featured ? <span className="text-amber-600">★</span> : null}
+                      </CardTitle>
+                      <p className="mt-1 text-sm text-slate-500">{p.slug}</p>
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Link className="btn btn-secondary" href={`/admin/projects/${p.id}/edit`}>

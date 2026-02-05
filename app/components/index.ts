@@ -3,3 +3,4 @@ export { Card, CardHeader, CardContent, CardTitle, CardDescription } from "./Car
 export { Container } from "./Container";
 export { Grid } from "./Grid";
 export { S3Uploader } from "./S3Uploader";
+export { S3ImageField } from "./S3ImageField";

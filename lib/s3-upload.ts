@@ -8,6 +8,7 @@ type UploadRequest = {
   filename: string;
   contentType: string;
   folder?: string;
+  key?: string;
 };
 
 export async function getSignedUploadUrl(
@@ -29,12 +30,13 @@ export async function getSignedUploadUrl(
 
 export async function uploadFileToS3(
   file: File,
-  options: { folder?: string } = {}
+  options: { folder?: string; key?: string } = {}
 ) {
   const signed = await getSignedUploadUrl({
     filename: file.name,
     contentType: file.type || "application/octet-stream",
     folder: options.folder,
+    key: options.key,
   });
 
   const putResponse = await fetch(signed.signedUrl, {

@@ -7,6 +7,7 @@ type UploadUrlRequest = {
   filename?: string;
   contentType?: string;
   folder?: string;
+  key?: string;
 };
 
 const region = process.env.AWS_REGION;
@@ -30,6 +31,13 @@ function sanitizeFilename(filename: string) {
   return filename.replace(/[^a-zA-Z0-9._-]/g, "_");
 }
 
+function sanitizeKey(key: string) {
+  return key
+    .replace(/\\/g, "/")
+    .replace(/[^a-zA-Z0-9/_-]/g, "_")
+    .replace(/^\/+/, "");
+}
+
 function buildPublicUrl(key: string) {
   const baseUrl = process.env.NEXT_PUBLIC_S3_PUBLIC_BASE_URL;
   if (baseUrl) {
@@ -46,16 +54,20 @@ export async function POST(request: Request) {
     const filename = body.filename?.trim();
     const contentType = body.contentType?.trim() || "application/octet-stream";
     const folder = body.folder?.trim() || "uploads";
+    const providedKey = body.key?.trim();
 
-    if (!filename) {
+    if (!filename && !providedKey) {
       return NextResponse.json(
-        { error: "filename is required" },
+        { error: "filename or key is required" },
         { status: 400 }
       );
     }
 
-    const safeFilename = sanitizeFilename(filename);
-    const key = `${folder}/${Date.now()}-${randomUUID()}-${safeFilename}`;
+    const key = providedKey
+      ? sanitizeKey(providedKey)
+      : `${folder}/${Date.now()}-${randomUUID()}-${sanitizeFilename(
+          filename || "upload"
+        )}`;
 
     const command = new PutObjectCommand({
       Bucket: bucket,

@@ -3,6 +3,7 @@ export const runtime = "nodejs";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { saveSiteContent } from "./actions";
+import { S3ImageField } from "@/app/components";
 
 export default async function AdminContentPage() {
   const site = await prisma.siteContent.findUnique({ where: { id: "site" } });
@@ -22,6 +23,14 @@ export default async function AdminContentPage() {
       </div>
 
       <form action={saveSiteContent} className="grid gap-6 rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-sm">
+        <S3ImageField
+          name="headshotUrl"
+          label="Headshot"
+          currentUrl={site?.headshotUrl}
+          objectKey="headshot/headshot"
+          hint="This image will be used on the homepage hero."
+        />
+
         <label className="grid gap-2">
           <span className="label">Hero headline</span>
           <input className="input" name="heroHeadline" defaultValue={site?.heroHeadline ?? ""} required />

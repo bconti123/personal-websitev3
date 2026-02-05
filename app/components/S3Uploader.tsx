@@ -7,6 +7,8 @@ type S3UploaderProps = {
   label?: string;
   folder?: string;
   accept?: string;
+  objectKey?: string;
+  getObjectKey?: (file: File) => string;
   onUploaded?: (result: { key: string; publicUrl: string }) => void;
 };
 
@@ -14,6 +16,8 @@ function S3Uploader({
   label = "Upload",
   folder = "uploads",
   accept = "image/*",
+  objectKey,
+  getObjectKey,
   onUploaded,
 }: S3UploaderProps) {
   const [isUploading, setIsUploading] = React.useState(false);
@@ -28,7 +32,11 @@ function S3Uploader({
     setError(null);
 
     try {
-      const result = await uploadFileToS3(file, { folder });
+      const resolvedKey = getObjectKey ? getObjectKey(file) : objectKey;
+      const result = await uploadFileToS3(file, {
+        folder,
+        key: resolvedKey,
+      });
       setLastUrl(result.publicUrl);
       onUploaded?.({ key: result.key, publicUrl: result.publicUrl });
     } catch (err) {

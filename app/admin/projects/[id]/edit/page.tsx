@@ -46,6 +46,7 @@ export default async function EditProjectPage({
           summary: project.summary,
           highlights: project.highlights,
           tech: project.tech,
+          imageUrl: project.imageUrl,
           repoUrl: project.repoUrl,
           liveUrl: project.liveUrl,
           featured: project.featured,

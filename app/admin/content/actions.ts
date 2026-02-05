@@ -9,6 +9,7 @@ export async function saveSiteContent(formData: FormData) {
   const heroSubline = (formData.get("heroSubline")?.toString() ?? "").trim() || null;
   const primaryCtaText = (formData.get("primaryCtaText")?.toString() ?? "").trim() || null;
   const primaryCtaUrl = (formData.get("primaryCtaUrl")?.toString() ?? "").trim() || null;
+  const headshotUrl = (formData.get("headshotUrl")?.toString() ?? "").trim() || null;
 //   const resumeUrl = (formData.get("resumeUrl")?.toString() ?? "").trim() || null;
 
   if (!heroHeadline) throw new Error("heroHeadline is required.");
@@ -16,8 +17,8 @@ export async function saveSiteContent(formData: FormData) {
   // singleton row
   await prisma.siteContent.upsert({
     where: { id: "site" },
-    update: { heroHeadline, heroSubline, primaryCtaText, primaryCtaUrl},
-    create: { id: "site", heroHeadline, heroSubline, primaryCtaText, primaryCtaUrl },
+    update: { heroHeadline, heroSubline, primaryCtaText, primaryCtaUrl, headshotUrl },
+    create: { id: "site", heroHeadline, heroSubline, primaryCtaText, primaryCtaUrl, headshotUrl },
   });
 
   revalidatePath("/");

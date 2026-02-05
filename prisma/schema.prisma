@@ -20,6 +20,7 @@ model Project {
   summary     String
   highlights  String[] // Postgres supports text[]
   tech        String[] // tags
+  imageUrl    String?
   repoUrl     String?
   liveUrl     String?
   featured    Boolean  @default(false)
@@ -56,6 +57,7 @@ model SiteContent {
   heroSubline   String?
   primaryCtaText String?
   primaryCtaUrl  String?
+  headshotUrl    String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }

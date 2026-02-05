@@ -86,9 +86,19 @@ export default async function Home() {
                   </p>
                 </div>
                 <div className="relative h-28 w-28 shrink-0">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-200 via-rose-200 to-sky-200" />
-                  <div className="absolute inset-2 rounded-full bg-white/80" />
-                  <div className="absolute inset-4 rounded-full bg-gradient-to-br from-slate-200 to-slate-100" />
+                  {site?.headshotUrl ? (
+                    <img
+                      src={site.headshotUrl}
+                      alt="Headshot"
+                      className="absolute inset-0 h-full w-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-200 via-rose-200 to-sky-200" />
+                      <div className="absolute inset-2 rounded-full bg-white/80" />
+                      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-slate-200 to-slate-100" />
+                    </>
+                  )}
                 </div>
               </div>
             </div>

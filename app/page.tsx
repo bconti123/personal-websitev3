@@ -1,34 +1,226 @@
 import { prisma } from "@/lib/prisma";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Container,
+  Grid,
+} from "./components";
 
 export default async function Home() {
   const site = await prisma.siteContent.findUnique({ where: { id: "site" } });
-  const socials = await prisma.socialLink.findMany({ where: { visible: true }, orderBy: { sortOrder: "asc" } });
-  const skills = await prisma.skill.findMany({ orderBy: [{ category: "asc" }, { sortOrder: "asc" }] });
-  const projects = await prisma.project.findMany({ orderBy: [{ featured: "desc" }, { sortOrder: "asc" }] });
+  const socials = await prisma.socialLink.findMany({
+    where: { visible: true },
+    orderBy: { sortOrder: "asc" },
+  });
+  const skills = await prisma.skill.findMany({
+    orderBy: [{ category: "asc" }, { sortOrder: "asc" }],
+  });
+  const projects = await prisma.project.findMany({
+    orderBy: [{ featured: "desc" }, { sortOrder: "asc" }],
+  });
+
+  const skillGroups = skills.reduce<Record<string, typeof skills>>((acc, skill) => {
+    const key = skill.category || "General";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(skill);
+    return acc;
+  }, {});
 
   return (
-    <main style={{ padding: 24 }}>
-      <h1>{site?.heroHeadline ?? "Personal Website"}</h1>
-      <p>{site?.heroSubline}</p>
+    <main className="relative min-h-screen overflow-hidden">
+      <div className="hero-orb hero-orb--amber" />
+      <div className="hero-orb hero-orb--sky" />
+      <div className="hero-orb hero-orb--rose" />
 
-      <h2>Social</h2>
-      <ul>
-        {socials.map((s) => (
-          <li key={s.id}>
-            <a href={s.url} target="_blank" rel="noreferrer">{s.label}</a>
-          </li>
-        ))}
-      </ul>
+      <Container className="relative py-20">
+        <section className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-600 shadow-sm">
+              Available for select collaborations
+            </div>
+            <h1 className="text-4xl font-semibold leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
+              {site?.heroHeadline ?? "Designing bold, human-centered digital stories."}
+            </h1>
+            <p className="max-w-2xl text-base text-slate-600 sm:text-lg">
+              {site?.heroSubline ??
+                "I craft modern web experiences with calm systems, striking visuals, and a focus on impact."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button>{site?.primaryCtaText ?? "View selected work"}</Button>
+              <Button variant="outline">Download resume</Button>
+            </div>
+            {socials.length > 0 ? (
+              <div className="flex flex-wrap gap-3 text-sm text-slate-600">
+                {socials.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 transition hover:border-slate-300 hover:text-slate-900"
+                  >
+                    <span>{s.label}</span>
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
 
-      <h2>Skills</h2>
-      <ul>
-        {skills.map((sk) => (
-          <li key={sk.id}>{sk.category}: {sk.name}</li>
-        ))}
-      </ul>
+          <div className="grid gap-6">
+            <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 p-6 shadow-xl backdrop-blur">
+              <div className="hero-glow absolute inset-0 opacity-70" />
+              <div className="relative flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                    Now
+                  </p>
+                  <h2 className="mt-2 text-2xl font-semibold text-slate-900">
+                    Studio-quality UI with real-world speed
+                  </h2>
+                  <p className="mt-3 text-sm text-slate-600">
+                    Based in Boston. Building product systems and polished frontends.
+                  </p>
+                </div>
+                <div className="relative h-28 w-28 shrink-0">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-200 via-rose-200 to-sky-200" />
+                  <div className="absolute inset-2 rounded-full bg-white/80" />
+                  <div className="absolute inset-4 rounded-full bg-gradient-to-br from-slate-200 to-slate-100" />
+                </div>
+              </div>
+            </div>
 
-      <h2 id="projects">Projects</h2>
-      {projects.length === 0 ? <p>No projects yet.</p> : null}
+            <Card variant="outline" className="bg-white/80">
+              <CardHeader>
+                <CardTitle>Quick stats</CardTitle>
+                <CardDescription>Highlights in one glance.</CardDescription>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-2xl font-semibold text-slate-900">{projects.length}</p>
+                  <p className="text-sm text-slate-600">Projects shipped</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-semibold text-slate-900">
+                    {Object.keys(skillGroups).length}
+                  </p>
+                  <p className="text-sm text-slate-600">Skill clusters</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="mt-20 space-y-8">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                Capabilities
+              </p>
+              <h2 className="text-3xl font-semibold text-slate-900">Skills & specialties</h2>
+            </div>
+            <p className="hidden max-w-sm text-sm text-slate-600 md:block">
+              A mix of product thinking, system design, and hands-on craftsmanship.
+            </p>
+          </div>
+
+          <Grid cols={3} gap="lg">
+            {Object.entries(skillGroups).map(([category, items]) => (
+              <Card key={category} className="bg-white/80">
+                <CardHeader>
+                  <CardTitle>{category}</CardTitle>
+                  <CardDescription>
+                    {items.length} skill{items.length === 1 ? "" : "s"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {items.map((skill) => (
+                    <span
+                      key={skill.id}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
+                    >
+                      {skill.name}
+                    </span>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </Grid>
+        </section>
+
+        <section className="mt-20 space-y-6" id="projects">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                Work
+              </p>
+              <h2 className="text-3xl font-semibold text-slate-900">Selected projects</h2>
+            </div>
+            <Button variant="ghost">View all</Button>
+          </div>
+
+          {projects.length === 0 ? (
+            <Card variant="outline" className="bg-white/70">
+              <CardContent className="text-sm text-slate-600">
+                No projects yet. Add one in the admin area to see it here.
+              </CardContent>
+            </Card>
+          ) : (
+            <Grid cols={2} gap="lg">
+              {projects.map((project) => (
+                <Card key={project.id} className="bg-white/85">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle>{project.title}</CardTitle>
+                      {project.featured ? (
+                        <span className="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">
+                          Featured
+                        </span>
+                      ) : null}
+                    </div>
+                    <CardDescription>{project.summary}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4 text-sm text-slate-600">
+                    <ul className="space-y-1">
+                      {project.highlights.slice(0, 3).map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-slate-400" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.slice(0, 4).map((item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      {project.liveUrl ? (
+                        <a href={project.liveUrl} target="_blank" rel="noreferrer">
+                          Live
+                        </a>
+                      ) : null}
+                      {project.repoUrl ? (
+                        <a href={project.repoUrl} target="_blank" rel="noreferrer">
+                          Repo
+                        </a>
+                      ) : null}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </Grid>
+          )}
+        </section>
+      </Container>
     </main>
   );
 }

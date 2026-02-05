@@ -23,59 +23,63 @@ export default function EditProjectForm({ project }: { project: ProjectData }) {
   const [state, formAction, pending] = useActionState(boundAction as any, initialState);
 
   return (
-    <form action={formAction} style={{ display: "grid", gap: 12, maxWidth: 700 }}>
+    <form action={formAction} className="grid gap-6 rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-sm">
       {!state.ok && state.message ? (
-        <div style={{ border: "1px solid #f3c", borderRadius: 10, padding: 10 }}>
-          {state.message}
-        </div>
+        <div className="error-box">{state.message}</div>
       ) : null}
 
-      <label>
-        Slug
-        <input name="slug" defaultValue={project.slug} required />
+      <div className="grid gap-4 md:grid-cols-2">
+        <label className="grid gap-2">
+          <span className="label">Slug</span>
+          <input className="input" name="slug" defaultValue={project.slug} required />
+        </label>
+
+        <label className="grid gap-2">
+          <span className="label">Title</span>
+          <input className="input" name="title" defaultValue={project.title} required />
+        </label>
+      </div>
+
+      <label className="grid gap-2">
+        <span className="label">Summary</span>
+        <textarea className="textarea" name="summary" rows={3} defaultValue={project.summary} required />
       </label>
 
-      <label>
-        Title
-        <input name="title" defaultValue={project.title} required />
+      <label className="grid gap-2">
+        <span className="label">Highlights (comma or new line separated)</span>
+        <textarea className="textarea" name="highlights" rows={4} defaultValue={project.highlights.join("\n")} />
       </label>
 
-      <label>
-        Summary
-        <textarea name="summary" rows={3} defaultValue={project.summary} required />
+      <label className="grid gap-2">
+        <span className="label">Tech tags (comma or new line separated)</span>
+        <textarea className="textarea" name="tech" rows={2} defaultValue={project.tech.join(", ")} />
       </label>
 
-      <label>
-        Highlights (comma or new line separated)
-        <textarea name="highlights" rows={4} defaultValue={project.highlights.join("\n")} />
-      </label>
+      <div className="grid gap-4 md:grid-cols-2">
+        <label className="grid gap-2">
+          <span className="label">Repo URL</span>
+          <input className="input" name="repoUrl" defaultValue={project.repoUrl ?? ""} />
+        </label>
 
-      <label>
-        Tech tags (comma or new line separated)
-        <textarea name="tech" rows={2} defaultValue={project.tech.join(", ")} />
-      </label>
+        <label className="grid gap-2">
+          <span className="label">Live URL</span>
+          <input className="input" name="liveUrl" defaultValue={project.liveUrl ?? ""} />
+        </label>
+      </div>
 
-      <label>
-        Repo URL
-        <input name="repoUrl" defaultValue={project.repoUrl ?? ""} />
-      </label>
+      <div className="flex flex-wrap items-center gap-6">
+        <label className="flex items-center gap-2 text-sm text-slate-700">
+          <input type="checkbox" name="featured" defaultChecked={project.featured} />
+          Featured
+        </label>
 
-      <label>
-        Live URL
-        <input name="liveUrl" defaultValue={project.liveUrl ?? ""} />
-      </label>
+        <label className="grid gap-2">
+          <span className="label">Sort order</span>
+          <input className="input" type="number" name="sortOrder" defaultValue={project.sortOrder} />
+        </label>
+      </div>
 
-      <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <input type="checkbox" name="featured" defaultChecked={project.featured} />
-        Featured
-      </label>
-
-      <label>
-        Sort order
-        <input type="number" name="sortOrder" defaultValue={project.sortOrder} />
-      </label>
-
-      <button type="submit" disabled={pending} style={{ cursor: "pointer" }}>
+      <button className="btn btn-primary" type="submit" disabled={pending}>
         {pending ? "Saving..." : "Save Changes"}
       </button>
     </form>

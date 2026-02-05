@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { deleteProject } from "./actions";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components";
 
 export default async function AdminProjectsPage() {
   const projects = await prisma.project.findMany({
@@ -8,45 +9,66 @@ export default async function AdminProjectsPage() {
   });
 
   return (
-    <section>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h1>Projects</h1>
-        <Link href="/admin/projects/new">+ New Project</Link>
+    <section className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+            Projects
+          </p>
+          <h1 className="text-2xl font-semibold text-slate-900">Manage projects</h1>
+        </div>
+        <Link className="btn btn-primary" href="/admin/projects/new">
+          + New Project
+        </Link>
       </div>
 
       {projects.length === 0 ? <p>No projects yet.</p> : null}
 
-      <ul style={{ display: "grid", gap: 12, padding: 0, listStyle: "none" }}>
+      <ul className="grid gap-4">
         {projects.map((p) => (
-          <li key={p.id} style={{ border: "1px solid #ddd", borderRadius: 10, padding: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-              <div>
-                <strong>{p.title}</strong> {p.featured ? "⭐" : ""}
-                <div style={{ opacity: 0.8 }}>{p.slug}</div>
-                <div style={{ marginTop: 8 }}>{p.summary}</div>
-              </div>
-
-              <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <Link href={`/admin/projects/${p.id}/edit`}>Edit</Link>
-
-                <form
-                  action={async () => {
-                    "use server";
-                    await deleteProject(p.id);
-                  }}
-                >
-                  <button type="submit" style={{ cursor: "pointer" }}>
-                    Delete
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            {p.tech.length ? (
-              <div style={{ marginTop: 10, opacity: 0.85 }}>
-                <small>Tech: {p.tech.join(", ")}</small>
-              </div>
-            ) : null}
+          <li key={p.id}>
+            <Card className="bg-white/80">
+              <CardHeader>
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <CardTitle>
+                      {p.title} {p.featured ? <span className="text-amber-600">★</span> : null}
+                    </CardTitle>
+                    <p className="mt-1 text-sm text-slate-500">{p.slug}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Link className="btn btn-secondary" href={`/admin/projects/${p.id}/edit`}>
+                      Edit
+                    </Link>
+                    <form
+                      action={async () => {
+                        "use server";
+                        await deleteProject(p.id);
+                      }}
+                    >
+                      <button className="btn btn-secondary" type="submit">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm text-slate-600">
+                <p>{p.summary}</p>
+                {p.tech.length ? (
+                  <div className="flex flex-wrap gap-2">
+                    {p.tech.slice(0, 6).map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+              </CardContent>
+            </Card>
           </li>
         ))}
       </ul>

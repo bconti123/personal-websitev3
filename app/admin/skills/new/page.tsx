@@ -14,10 +14,17 @@ export default async function NewSkillPage({
     sp?.category && (CATEGORIES as readonly string[]).includes(sp.category) ? sp.category : CATEGORIES[0];
 
   return (
-    <section>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h1>New Skill</h1>
-        <Link href="/admin/skills">Back</Link>
+    <section className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+            Skills
+          </p>
+          <h1 className="text-2xl font-semibold text-slate-900">New skill</h1>
+        </div>
+        <Link className="btn btn-secondary" href="/admin/skills">
+          Back
+        </Link>
       </div>
 
       <NewSkillForm defaultCategory={defaultCategory} />

@@ -13,21 +13,19 @@ export default function NewSkillForm({ defaultCategory }: Props) {
   const [state, formAction, pending] = useActionState(createSkill, initialState);
 
   return (
-    <form action={formAction} style={{ display: "grid", gap: 12, maxWidth: 600 }}>
+    <form action={formAction} className="grid gap-6 rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-sm">
       {!state.ok && state.message ? (
-        <div style={{ border: "1px solid #f3c", borderRadius: 10, padding: 10 }}>
-          {state.message}
-        </div>
+        <div className="error-box">{state.message}</div>
       ) : null}
 
-      <label>
-        Name
-        <input name="name" placeholder="TypeScript" required />
+      <label className="grid gap-2">
+        <span className="label">Name</span>
+        <input className="input" name="name" placeholder="TypeScript" required />
       </label>
 
-      <label>
-        Category
-        <select name="category" defaultValue={defaultCategory} required>
+      <label className="grid gap-2">
+        <span className="label">Category</span>
+        <select className="input" name="category" defaultValue={defaultCategory} required>
           {CATEGORIES.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -36,12 +34,12 @@ export default function NewSkillForm({ defaultCategory }: Props) {
         </select>
       </label>
 
-      <label>
-        Sort order
-        <input type="number" name="sortOrder" defaultValue={0} />
+      <label className="grid gap-2">
+        <span className="label">Sort order</span>
+        <input className="input" type="number" name="sortOrder" defaultValue={0} />
       </label>
 
-      <button type="submit" disabled={pending} style={{ cursor: "pointer" }}>
+      <button className="btn btn-primary" type="submit" disabled={pending}>
         {pending ? "Creating..." : "Create Skill"}
       </button>
     </form>

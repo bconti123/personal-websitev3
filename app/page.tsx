@@ -39,9 +39,9 @@ export default async function Home() {
       <Container className="relative py-20">
         <section className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-600 shadow-sm">
+            {/* <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-600 shadow-sm">
               Available for select collaborations
-            </div>
+            </div> */}
             <h1 className="text-4xl font-semibold leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
               {site?.heroHeadline ?? "Designing bold, human-centered digital stories."}
             </h1>
@@ -49,10 +49,10 @@ export default async function Home() {
               {site?.heroSubline ??
                 "I craft modern web experiences with calm systems, striking visuals, and a focus on impact."}
             </p>
-            <div className="flex flex-wrap gap-3">
+            {/* <div className="flex flex-wrap gap-3">
               <Button>{site?.primaryCtaText ?? "View selected work"}</Button>
               <Button variant="outline">Download resume</Button>
-            </div>
+            </div> */}
             {socials.length > 0 ? (
               <div className="flex flex-wrap gap-3 text-sm text-slate-600">
                 {socials.map((s) => (
@@ -75,14 +75,14 @@ export default async function Home() {
               <div className="hero-glow absolute inset-0 opacity-70" />
               <div className="relative flex items-center justify-between gap-6">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                  {/* <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
                     Now
-                  </p>
+                  </p> */}
                   <h2 className="mt-2 text-2xl font-semibold text-slate-900">
-                    Studio-quality UI with real-world speed
+                    Full Stack Developer
                   </h2>
                   <p className="mt-3 text-sm text-slate-600">
-                    Based in Boston. Building product systems and polished frontends.
+                    I build thoughtful, user-centered web applications with a focus on
                   </p>
                 </div>
                 <div className="relative h-28 w-28 shrink-0">
@@ -105,69 +105,34 @@ export default async function Home() {
 
             <Card variant="outline" className="bg-white/80">
               <CardHeader>
-                <CardTitle>Quick stats</CardTitle>
-                <CardDescription>Highlights in one glance.</CardDescription>
+                <CardTitle>Projects</CardTitle>
+                <CardDescription>Highlights of my past work</CardDescription>
               </CardHeader>
               <CardContent className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-2xl font-semibold text-slate-900">{projects.length}</p>
                   <p className="text-sm text-slate-600">Projects shipped</p>
                 </div>
-                <div>
+                {/* <div>
                   <p className="text-2xl font-semibold text-slate-900">
                     {Object.keys(skillGroups).length}
                   </p>
                   <p className="text-sm text-slate-600">Skill clusters</p>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </div>
         </section>
 
-        <section className="mt-20 space-y-8">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-                Capabilities
-              </p>
-              <h2 className="text-3xl font-semibold text-slate-900">Skills & specialties</h2>
-            </div>
-            <p className="hidden max-w-sm text-sm text-slate-600 md:block">
-              A mix of product thinking, system design, and hands-on craftsmanship.
-            </p>
-          </div>
 
-          <Grid cols={3} gap="lg">
-            {Object.entries(skillGroups).map(([category, items]) => (
-              <Card key={category} className="bg-white/80">
-                <CardHeader>
-                  <CardTitle>{category}</CardTitle>
-                  <CardDescription>
-                    {items.length} skill{items.length === 1 ? "" : "s"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-2">
-                  {items.map((skill) => (
-                    <span
-                      key={skill.id}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
-                    >
-                      {skill.name}
-                    </span>
-                  ))}
-                </CardContent>
-              </Card>
-            ))}
-          </Grid>
-        </section>
 
         <section className="mt-20 space-y-6" id="projects">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-                Work
+                Development highlights
               </p>
-              <h2 className="text-3xl font-semibold text-slate-900">Selected projects</h2>
+              <h2 className="text-3xl font-semibold text-slate-900">Featured projects</h2>
             </div>
             <Button variant="ghost">View all</Button>
           </div>
@@ -211,7 +176,10 @@ export default async function Home() {
                         </li>
                       ))}
                     </ul>
+                              
+                    <CardTitle className="text-sm font-semibold">Tech stack:</CardTitle>
                     <div className="flex flex-wrap gap-2">
+
                       {project.tech.slice(0, 4).map((item) => (
                         <span
                           key={item}
@@ -238,6 +206,43 @@ export default async function Home() {
               ))}
             </Grid>
           )}
+        </section>
+
+                <section className="mt-20 space-y-8">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                Capabilities
+              </p>
+              <h2 className="text-3xl font-semibold text-slate-900">Skills & specialties</h2>
+            </div>
+            <p className="hidden max-w-sm text-sm text-slate-600 md:block">
+              A selection of my key skills, organized by category. View the full list in the
+            </p>
+          </div>
+
+          <Grid cols={3} gap="lg">
+            {Object.entries(skillGroups).map(([category, items]) => (
+              <Card key={category} className="bg-white/80">
+                <CardHeader>
+                  <CardTitle>{category}</CardTitle>
+                  {/* <CardDescription>
+                    {items.length} skill{items.length === 1 ? "" : "s"}
+                  </CardDescription> */}
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {items.map((skill) => (
+                    <span
+                      key={skill.id}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
+                    >
+                      {skill.name}
+                    </span>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </Grid>
         </section>
       </Container>
     </main>

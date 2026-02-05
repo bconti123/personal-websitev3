@@ -71,7 +71,7 @@ export default async function Home() {
           </div>
 
           <div className="grid gap-6">
-            <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 p-6 shadow-xl backdrop-blur">
+            <div className="relative overflow-hidden rounded-4xl border border-white/70 bg-white/70 p-6 shadow-xl backdrop-blur">
               <div className="hero-glow absolute inset-0 opacity-70" />
               <div className="relative flex items-center justify-between gap-6">
                 <div>
@@ -94,9 +94,9 @@ export default async function Home() {
                     />
                   ) : (
                     <>
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-200 via-rose-200 to-sky-200" />
+                      <div className="absolute inset-0 rounded-full bg-linear-to-br from-amber-200 via-rose-200 to-sky-200" />
                       <div className="absolute inset-2 rounded-full bg-white/80" />
-                      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-slate-200 to-slate-100" />
+                      <div className="absolute inset-4 rounded-full bg-linear-to-br from-slate-200 to-slate-100" />
                     </>
                   )}
                 </div>

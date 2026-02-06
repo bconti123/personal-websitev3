@@ -75,26 +75,20 @@ export default async function Home() {
               <div className="hero-glow absolute inset-0 opacity-70" />
               <div className="relative flex items-center justify-between gap-6">
                 <div>
-                  {/* <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-                    Now
-                  </p> */}
                   <h2 className="mt-2 text-2xl font-semibold text-slate-900">
                     Full Stack Developer
                   </h2>
-                  <p className="mt-3 text-sm text-slate-600">
-                    I build thoughtful, user-centered web applications with a focus on
-                  </p>
                 </div>
-                <div className="relative h-28 w-28 shrink-0">
+                <div className="relative h-24 w-24 shrink-0 rounded-full p-1 ring-1 ring-slate-200/80 bg-white/60 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
                   {site?.headshotUrl ? (
                     <img
                       src={site.headshotUrl}
                       alt="Headshot"
-                      className="absolute inset-0 h-full w-full rounded-full object-cover"
+                      className="absolute inset-1 h-[calc(100%-0.5rem)] w-[calc(100%-0.5rem)] rounded-full object-cover"
                     />
                   ) : (
                     <>
-                      <div className="absolute inset-0 rounded-full bg-linear-to-br from-amber-200 via-rose-200 to-sky-200" />
+                      <div className="absolute inset-1 rounded-full bg-linear-to-br from-amber-200 via-rose-200 to-sky-200" />
                       <div className="absolute inset-2 rounded-full bg-white/80" />
                       <div className="absolute inset-4 rounded-full bg-linear-to-br from-slate-200 to-slate-100" />
                     </>
@@ -108,7 +102,7 @@ export default async function Home() {
                 <CardTitle>Projects</CardTitle>
                 <CardDescription>Highlights of my past work</CardDescription>
               </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-4">
+              <CardContent className="grid grid-cols-1">
                 <div>
                   <p className="text-2xl font-semibold text-slate-900">{projects.length}</p>
                   <p className="text-sm text-slate-600">Projects shipped</p>
@@ -134,7 +128,7 @@ export default async function Home() {
               </p>
               <h2 className="text-3xl font-semibold text-slate-900">Featured projects</h2>
             </div>
-            <Button variant="ghost">View all</Button>
+            {/* <Button variant="ghost">View all</Button> */}
           </div>
 
           {projects.length === 0 ? (
@@ -177,7 +171,7 @@ export default async function Home() {
                       ))}
                     </ul>
                               
-                    <CardTitle className="text-sm font-semibold">Tech stack:</CardTitle>
+                    <span className="font-semibold">Tech stack:</span>
                     <div className="flex flex-wrap gap-2">
 
                       {project.tech.slice(0, 4).map((item) => (
@@ -217,7 +211,7 @@ export default async function Home() {
               <h2 className="text-3xl font-semibold text-slate-900">Skills & specialties</h2>
             </div>
             <p className="hidden max-w-sm text-sm text-slate-600 md:block">
-              A selection of my key skills, organized by category. View the full list in the
+              A selection of my key skills, organized by category.
             </p>
           </div>
 

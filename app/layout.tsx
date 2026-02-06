@@ -22,12 +22,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
       >
-        {children}
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">{children}</main>
+          <footer className="border-t border-slate-200/80 px-6 py-4 text-center text-sm text-slate-600">
+            &copy; 2026 Bryant Conti. All rights reserved.
+          </footer>
+        </div>
       </body>
     </html>
   );

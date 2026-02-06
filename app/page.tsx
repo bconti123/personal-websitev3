@@ -8,6 +8,7 @@ import {
   CardTitle,
   Container,
   Grid,
+  Icon,
 } from "./components";
 
 export default async function Home() {
@@ -52,6 +53,7 @@ export default async function Home() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 transition hover:border-slate-300 hover:text-slate-900"
                   >
+                    <Icon name={s.iconKey} label={s.label} />
                     <span>{s.label}</span>
                   </a>
                 ))}

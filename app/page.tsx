@@ -122,7 +122,7 @@ export default async function Home() {
               {projects.map((project) => (
                 <Card key={project.id} className="bg-white/85">
                   {project.imageUrl ? (
-                    <div className="relative overflow-hidden rounded-t-xl aspect-video">
+                    <div className="relative aspect-video overflow-hidden rounded-t-xl">
                       <Image
                         src={project.imageUrl}
                         alt={`${project.title} cover`}
@@ -131,7 +131,19 @@ export default async function Home() {
                         className="h-full w-full object-cover"
                       />
                     </div>
-                  ) : null}
+                  ) : (
+                    <div className="relative aspect-video overflow-hidden rounded-t-xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(148,163,184,0.35),transparent_55%)]" />
+                      <div className="relative flex h-full flex-col items-center justify-center gap-2">
+                        <span className="font-mono text-3xl font-semibold text-white/90 sm:text-4xl">
+                          {"</>"}
+                        </span>
+                        <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/75">
+                          No image available
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle>{project.title}</CardTitle>

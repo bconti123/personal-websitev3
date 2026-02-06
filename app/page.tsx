@@ -139,7 +139,7 @@ export default async function Home() {
                           {"</>"}
                         </span>
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/75">
-                          No image available
+                          Backend Service (no UI)
                         </p>
                       </div>
                     </div>

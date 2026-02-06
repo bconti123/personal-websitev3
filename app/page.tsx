@@ -32,34 +32,10 @@ export default async function Home() {
   }, {});
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden">
       <Container className="relative py-20">
         <section className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-8">
-            <h1 className="text-4xl font-semibold leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
-              {site?.heroHeadline ?? "Designing bold, human-centered digital stories."}
-            </h1>
-            <p className="max-w-2xl text-base text-slate-600 sm:text-lg">
-              {site?.heroSubline ??
-                "I craft modern web experiences with calm systems, striking visuals, and a focus on impact."}
-            </p>
-            {socials.length > 0 ? (
-              <div className="flex flex-wrap gap-3 text-sm text-slate-600">
-                {socials.map((s) => (
-                  <a
-                    key={s.id}
-                    href={s.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 transition hover:border-slate-300 hover:text-slate-900"
-                  >
-                    <Icon name={s.iconKey} label={s.label} />
-                    <span>{s.label}</span>
-                  </a>
-                ))}
-              </div>
-            ) : null}
-
             <div className="relative overflow-hidden rounded-4xl border border-white/70 bg-white/70 p-6 shadow-xl backdrop-blur">
               <div className="relative flex items-center gap-6">
                 <div className="relative h-24 w-24 shrink-0 rounded-full p-1 ring-1 ring-slate-200/80 bg-white/60 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
@@ -80,9 +56,32 @@ export default async function Home() {
                   )}
                 </div>
                 <div>
+                  <h1 className="text-4xl font-semibold leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
+                    {site?.heroHeadline ?? "[Full Name]"}
+                  </h1>
                   <h2 className="mt-2 text-2xl font-semibold text-slate-900">
                     Full Stack Developer
                   </h2>
+                  <p className="max-w-2xl text-base text-slate-600 sm:text-lg">
+                    {site?.heroSubline ??
+                      "Full-stack & backend focused • Next.js • Prisma • PostgreSQL"}
+                  </p>
+                              {socials.length > 0 ? (
+              <div className="flex flex-wrap gap-3 text-sm text-slate-600">
+                {socials.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 transition hover:border-slate-300 hover:text-slate-900"
+                  >
+                    <Icon name={s.iconKey} label={s.label} />
+                    <span>{s.label}</span>
+                  </a>
+                ))}
+              </div>
+            ) : null}
                 </div>                
               </div>
             </div>
@@ -110,7 +109,6 @@ export default async function Home() {
               </p>
               <h2 className="text-3xl font-semibold text-slate-900">Projects</h2>
             </div>
-            {/* <Button variant="ghost">View all</Button> */}
           </div>
 
           {projects.length === 0 ? (
@@ -157,7 +155,7 @@ export default async function Home() {
                               
                     <span className="font-semibold">Tech stack:</span>
                     <div className="flex flex-wrap gap-2">
-                      {project.tech.slice(0, 4).map((item) => (
+                      {project.tech.map((item) => (
                         <span
                           key={item}
                           className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
@@ -169,7 +167,7 @@ export default async function Home() {
                     <div className="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                       {project.liveUrl ? (
                         <a href={project.liveUrl} target="_blank" rel="noreferrer">
-                          Live
+                          Live Demo
                         </a>
                       ) : null}
                       {project.repoUrl ? (
@@ -222,6 +220,6 @@ export default async function Home() {
           </Grid>
         </section>
       </Container>
-    </main>
+    </div>
   );
 }

@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
@@ -32,10 +31,6 @@ export default async function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <div className="hero-orb hero-orb--amber" />
-      <div className="hero-orb hero-orb--sky" />
-      <div className="hero-orb hero-orb--rose" />
-
       <Container className="relative py-20">
         <section className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-8">
@@ -72,7 +67,6 @@ export default async function Home() {
 
           <div className="grid gap-6">
             <div className="relative overflow-hidden rounded-4xl border border-white/70 bg-white/70 p-6 shadow-xl backdrop-blur">
-              <div className="hero-glow absolute inset-0 opacity-70" />
               <div className="relative flex items-center justify-between gap-6">
                 <div>
                   <h2 className="mt-2 text-2xl font-semibold text-slate-900">
@@ -88,9 +82,9 @@ export default async function Home() {
                     />
                   ) : (
                     <>
-                      <div className="absolute inset-1 rounded-full bg-linear-to-br from-amber-200 via-rose-200 to-sky-200" />
+                      <div className="absolute inset-1 rounded-full bg-slate-200" />
                       <div className="absolute inset-2 rounded-full bg-white/80" />
-                      <div className="absolute inset-4 rounded-full bg-linear-to-br from-slate-200 to-slate-100" />
+                      <div className="absolute inset-4 rounded-full bg-slate-300" />
                     </>
                   )}
                 </div>

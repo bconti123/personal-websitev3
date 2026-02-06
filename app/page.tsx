@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -32,11 +33,8 @@ export default async function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden">
       <Container className="relative py-20">
-        <section className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <section className="mx-auto max-w-4xl space-y-8">
           <div className="space-y-8">
-            {/* <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-600 shadow-sm">
-              Available for select collaborations
-            </div> */}
             <h1 className="text-4xl font-semibold leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
               {site?.heroHeadline ?? "Designing bold, human-centered digital stories."}
             </h1>
@@ -44,10 +42,6 @@ export default async function Home() {
               {site?.heroSubline ??
                 "I craft modern web experiences with calm systems, striking visuals, and a focus on impact."}
             </p>
-            {/* <div className="flex flex-wrap gap-3">
-              <Button>{site?.primaryCtaText ?? "View selected work"}</Button>
-              <Button variant="outline">Download resume</Button>
-            </div> */}
             {socials.length > 0 ? (
               <div className="flex flex-wrap gap-3 text-sm text-slate-600">
                 {socials.map((s) => (
@@ -63,21 +57,16 @@ export default async function Home() {
                 ))}
               </div>
             ) : null}
-          </div>
 
-          <div className="grid gap-6">
             <div className="relative overflow-hidden rounded-4xl border border-white/70 bg-white/70 p-6 shadow-xl backdrop-blur">
-              <div className="relative flex items-center justify-between gap-6">
-                <div>
-                  <h2 className="mt-2 text-2xl font-semibold text-slate-900">
-                    Full Stack Developer
-                  </h2>
-                </div>
+              <div className="relative flex items-center gap-6">
                 <div className="relative h-24 w-24 shrink-0 rounded-full p-1 ring-1 ring-slate-200/80 bg-white/60 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
                   {site?.headshotUrl ? (
-                    <img
+                    <Image
                       src={site.headshotUrl}
                       alt="Headshot"
+                      fill
+                      sizes="(min-width: 1024px) 8rem, (min-width: 640px) 7rem, 6rem"
                       className="absolute inset-1 h-[calc(100%-0.5rem)] w-[calc(100%-0.5rem)] rounded-full object-cover"
                     />
                   ) : (
@@ -88,6 +77,11 @@ export default async function Home() {
                     </>
                   )}
                 </div>
+                <div>
+                  <h2 className="mt-2 text-2xl font-semibold text-slate-900">
+                    Full Stack Developer
+                  </h2>
+                </div>                
               </div>
             </div>
 
@@ -101,26 +95,18 @@ export default async function Home() {
                   <p className="text-2xl font-semibold text-slate-900">{projects.length}</p>
                   <p className="text-sm text-slate-600">Projects shipped</p>
                 </div>
-                {/* <div>
-                  <p className="text-2xl font-semibold text-slate-900">
-                    {Object.keys(skillGroups).length}
-                  </p>
-                  <p className="text-sm text-slate-600">Skill clusters</p>
-                </div> */}
               </CardContent>
             </Card>
           </div>
         </section>
 
-
-
         <section className="mt-20 space-y-6" id="projects">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-start">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
                 Development highlights
               </p>
-              <h2 className="text-3xl font-semibold text-slate-900">Featured projects</h2>
+              <h2 className="text-3xl font-semibold text-slate-900">Projects</h2>
             </div>
             {/* <Button variant="ghost">View all</Button> */}
           </div>
@@ -136,10 +122,12 @@ export default async function Home() {
               {projects.map((project) => (
                 <Card key={project.id} className="bg-white/85">
                   {project.imageUrl ? (
-                    <div className="overflow-hidden rounded-t-xl aspect-video">
-                      <img
+                    <div className="relative overflow-hidden rounded-t-xl aspect-video">
+                      <Image
                         src={project.imageUrl}
                         alt={`${project.title} cover`}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, 100vw"
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -167,7 +155,6 @@ export default async function Home() {
                               
                     <span className="font-semibold">Tech stack:</span>
                     <div className="flex flex-wrap gap-2">
-
                       {project.tech.slice(0, 4).map((item) => (
                         <span
                           key={item}

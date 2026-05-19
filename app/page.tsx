@@ -9,6 +9,7 @@ import {
   Container,
   Grid,
   Icon,
+  ThemeToggle,
 } from "./components";
 
 export default async function Home() {
@@ -66,8 +67,7 @@ export default async function Home() {
                     {site?.heroSubline ??
                       "Full-stack & backend focused • Next.js • Prisma • PostgreSQL"}
                   </p>
-                              {socials.length > 0 ? (
-              <div className="flex flex-wrap gap-3 text-sm text-slate-600">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-600">
                 {socials.map((s) => (
                   <a
                     key={s.id}
@@ -80,8 +80,8 @@ export default async function Home() {
                     <span>{s.label}</span>
                   </a>
                 ))}
+                <ThemeToggle />
               </div>
-            ) : null}
                 </div>                
               </div>
             </div>

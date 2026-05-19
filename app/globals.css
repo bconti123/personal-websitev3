@@ -1,14 +1,96 @@
 @import "tailwindcss";
 
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #faf8f4;
+  --bg-elev: #ffffff;
+  --bg-gradient: radial-gradient(
+      1100px 600px at 12% -10%,
+      rgba(99, 102, 241, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 100% 0%,
+      rgba(56, 189, 248, 0.07),
+      transparent 55%
+    );
+
+  --fg: #0f172a;
+  --fg-strong: #020617;
+  --muted: #475569;
+  --muted-soft: #64748b;
+
+  --surface: #ffffff;
+  --surface-translucent: rgba(255, 255, 255, 0.72);
+  --surface-translucent-strong: rgba(255, 255, 255, 0.86);
+
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --ring: #3b82f6;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --badge-bg: #fef3c7;
+  --badge-fg: #92400e;
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -12px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0d12;
+  --bg-elev: #151821;
+  --bg-gradient: radial-gradient(
+      1100px 600px at 12% -10%,
+      rgba(99, 102, 241, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 100% 0%,
+      rgba(56, 189, 248, 0.1),
+      transparent 55%
+    );
+
+  --fg: #e6edf6;
+  --fg-strong: #f8fafc;
+  --muted: #9aa6b8;
+  --muted-soft: #7b8597;
+
+  --surface: #151821;
+  --surface-translucent: rgba(22, 26, 36, 0.72);
+  --surface-translucent-strong: rgba(22, 26, 36, 0.88);
+
+  --border: #252a37;
+  --border-strong: #323a4d;
+  --ring: #60a5fa;
+
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --badge-bg: rgba(251, 191, 36, 0.15);
+  --badge-fg: #fcd34d;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4),
+    0 12px 32px -16px rgba(0, 0, 0, 0.6);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
   }
 
   body {
     font-family: var(--font-geist-sans);
-    background: #f8f7f3;
-    @apply text-zinc-900 antialiased;
+    background-color: var(--bg);
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--fg);
+    @apply antialiased;
+    transition: background-color 200ms ease, color 200ms ease;
   }
 
   a {
@@ -16,7 +98,9 @@
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ring);
+    border-radius: 4px;
   }
 }
 
@@ -26,42 +110,94 @@
   }
 
   .card {
-    @apply rounded-xl border border-zinc-200 bg-white p-6 shadow-sm;
+    @apply rounded-xl p-6;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
   }
 
-  /* Buttons: define separately (no @apply btn inside other classes) */
   .btn {
     @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition;
   }
 
   .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-500;
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
   }
 
   .btn-secondary {
-    @apply border border-zinc-300 bg-white hover:bg-zinc-50;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--fg);
+  }
+  .btn-secondary:hover {
+    background: color-mix(in srgb, var(--surface) 92%, var(--fg) 8%);
   }
 
-  /* Inputs */
-  .input {
-    @apply w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500;
-  }
-
+  .input,
   .textarea {
-    @apply w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500;
+    @apply w-full rounded-md px-3 py-2 text-sm outline-none;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+  }
+  .input:focus,
+  .textarea:focus {
+    box-shadow: 0 0 0 2px var(--ring);
   }
 
   .label {
-    @apply text-sm font-medium text-zinc-800;
+    @apply text-sm font-medium;
+    color: var(--fg);
   }
 
   .muted {
-    @apply text-sm text-zinc-600;
+    @apply text-sm;
+    color: var(--muted);
   }
 
-  /* Simple error box */
   .error-box {
-    @apply rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-800;
+    @apply rounded-md px-3 py-2 text-sm;
+    background: color-mix(in srgb, #fecaca 40%, transparent);
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
   }
-
 }
+
+/* ---------- Dark-mode utility overrides (homepage scope) ----------
+   Targets the specific Tailwind utilities used by app/page.tsx so we
+   get dark mode without rewriting every component. Unlayered styles
+   beat Tailwind's utilities layer per cascade-layer rules. */
+:root[data-theme="dark"] .text-slate-900 { color: var(--fg-strong); }
+:root[data-theme="dark"] .text-slate-700 { color: var(--fg); }
+:root[data-theme="dark"] .text-slate-600,
+:root[data-theme="dark"] .text-slate-500 { color: var(--muted); }
+
+:root[data-theme="dark"] .bg-white { background-color: var(--surface); }
+:root[data-theme="dark"] .bg-white\/85 { background-color: color-mix(in srgb, var(--surface) 85%, transparent); }
+:root[data-theme="dark"] .bg-white\/80 { background-color: color-mix(in srgb, var(--surface) 80%, transparent); }
+:root[data-theme="dark"] .bg-white\/70 { background-color: color-mix(in srgb, var(--surface) 70%, transparent); }
+:root[data-theme="dark"] .bg-white\/60 { background-color: color-mix(in srgb, var(--surface) 60%, transparent); }
+
+:root[data-theme="dark"] .border-slate-200,
+:root[data-theme="dark"] .border-slate-300 { border-color: var(--border); }
+:root[data-theme="dark"] .border-white\/70 { border-color: color-mix(in srgb, var(--border-strong) 80%, transparent); }
+:root[data-theme="dark"] .ring-slate-200\/80 { --tw-ring-color: var(--border); }
+
+:root[data-theme="dark"] .bg-slate-200 { background-color: #2a3142; }
+:root[data-theme="dark"] .bg-slate-300 { background-color: #353c50; }
+:root[data-theme="dark"] .bg-slate-400 { background-color: var(--muted-soft); }
+
+:root[data-theme="dark"] .bg-amber-100 { background-color: var(--badge-bg); }
+:root[data-theme="dark"] .text-amber-700 { color: var(--badge-fg); }
+
+/* Footer in layout.tsx */
+:root[data-theme="dark"] .border-slate-200\/80 { border-color: var(--border); }
+
+/* Project card placeholder gradient — already dark; just tint a touch warmer */
+:root[data-theme="dark"] .from-slate-900 { --tw-gradient-from: #0a0d14 var(--tw-gradient-from-position); }
+:root[data-theme="dark"] .via-slate-800 { --tw-gradient-via: #131826 var(--tw-gradient-via-position); }
+:root[data-theme="dark"] .to-slate-700 { --tw-gradient-to: #1c2336 var(--tw-gradient-to-position); }
